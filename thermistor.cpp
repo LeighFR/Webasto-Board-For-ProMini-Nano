@@ -39,13 +39,15 @@
 #define TEMPERATURENOMINAL 25
 
 // Number of ADC samples
-#define NUMSAMPLES         15
+// LFR Reduced from 15 to 5 to match lowsmoke
+#define NUMSAMPLES         5
 
 // ADC resolution
 //#ifdef ESP32
 //Running on M0
-#define ADC_RESOLUTION 4096
-//#define ADC_RESOLUTION 1023 //Resolution set to 10 bit
+// LFR removed ADC_RESOLUTION 4096 as running on an arduino
+//#define ADC_RESOLUTION 4096
+#define ADC_RESOLUTION 1023 //Resolution set to 10 bit
 //#else
 //#define ADC_RESOLUTION 1023
 //#endif
@@ -60,7 +62,7 @@
  * @param bCoef beta coefficient of the thermistor
  * @param serialRes Value of the serial resistor
  */
-THERMISTOR::THERMISTOR(uint8_t adcPin, uint16_t nomRes, uint16_t bCoef, uint16_t serialRes)
+THERMISTOR::THERMISTOR(uint8_t adcPin, uint32_t nomRes, uint16_t bCoef, uint32_t serialRes)
 {
   analogPin = adcPin;
   nominalResistance = nomRes;
@@ -78,7 +80,7 @@ THERMISTOR::THERMISTOR(uint8_t adcPin, uint16_t nomRes, uint16_t bCoef, uint16_t
 int THERMISTOR::read(void)
 {
   uint8_t i;
-  uint16_t sample;
+  uint32_t sample;
   float average = 0;
 
   //analogReference(DEFAULT);

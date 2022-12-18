@@ -5,6 +5,8 @@
 // https://davidmcluckie.com/arduino-webasto-shower-project/ 
 // His project was based on the work of Mael Poureau
 // https://maelpoureau.com/webasto_shower/
+// (Mael's work only seems available via the wayback web archive now)
+// https://web.archive.org/web/20220103012712/https://maelpoureau.com/webasto_shower/
 //
 // I've changed it from a Shower to a general purpose controller which tries to regulate the 
 // Temperature to a pre-defined target by adjusting the Fueling and Combustion fan
@@ -30,6 +32,16 @@
 //
 // Simon Rafferty SimonSFX@Outlook.com 2020
 //*********************************************************************************************
+
+// Leigh notes (after updates to run with Pro Mini as per Mael's original shower code
+// Need to calibrate thermistors
+// Improve flame out detection. Some sort of shunt over the glowplug would be useful, to measure
+//  internal resistance, though not sure how that would quite work with the pro mini
+// Could use checks on whether pump, fan, glowplug are short or open circuit.
+
+//
+// To see logging, switch on serial monitor and set baud rate to 115200 (as in the setup command below)
+//
 
 #include <math.h> // needed to perform some calculations
 //#include <SAMD21turboPWM.h>
@@ -59,7 +71,7 @@ float throttling_idle_fan = 30;
 //If you get no fuel (pump not clicking) increase this number
 //Values 22,30 or 60 seem to work in most cases.
 
-int pump_size = 60; //22,30,60 
+int pump_size = 22; //22,30,60 
 //**********************************************************************************
  
 //Prime
@@ -76,20 +88,21 @@ float start_fuel = 1;
 
 int full_power_increment_time = 30; //seconds
 
-
-
+// LFR Updated pin connections to match daughter board for converting pro mini to 
+// suitable layout for use in Simon's board.
+// https://oshwlab.com/1leighreid/feather-to-promini-board
 
 //Pin Connections
-int fuel_pump_pin = 11;
+int fuel_pump_pin = 6;
 int glow_plug_pin = 5;
-int burn_fan_pin = 10;
-int water_pump_pin = 9;
-int water_temp_pin = A1;
-int exhaust_temp_pin = A2;
+int burn_fan_pin = 9;
+int water_pump_pin = 10;
+int water_temp_pin = A2;
+int exhaust_temp_pin = A1;
 int lambda_pin = A3;
 int push_pin = A0;
 //Pin Connections
-
+// LFR A<pin no> stands for Analog lol
 
 //Temperature Filtering
 #define filterSamples   13              // filterSamples should  be an odd number, no smaller than 3

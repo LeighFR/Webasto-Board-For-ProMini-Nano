@@ -38,12 +38,12 @@ class THERMISTOR
     /**
      * Nominal resistance
      */
-    uint16_t nominalResistance;
+    uint32_t nominalResistance;
 
     /**
      * Serial resistance
      */
-    uint16_t serialResistance;
+    uint32_t serialResistance;
 
     /**
      * Analog pin
@@ -65,7 +65,7 @@ class THERMISTOR
      * @param bCoef beta coefficient of the thermistor
      * @param serialRes Value of the serial resistor
      */
-    THERMISTOR(uint8_t adcPin, uint16_t nomRes, uint16_t bCoef, uint16_t serialRes);
+    THERMISTOR(uint8_t adcPin, uint32_t nomRes, uint16_t bCoef, uint32_t serialRes);
 
     /**
      * read

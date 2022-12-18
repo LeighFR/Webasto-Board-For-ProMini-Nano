@@ -4,9 +4,10 @@ bool Ret_Val = false;
 
   //Latching switch connected to heating timer.
   //When On, attempt to regulate temperature to target
-  if (analogRead(push_pin)>1000) {
-//  if (analogRead(push_pin)>250) {
-//    if (digitalRead(push_pin)) {
+  // LFR changed this from : if (analogRead(push_pin)>10000) {
+//  if (analogRead(push_pin)>100) {
+  if (analogRead(push_pin)>250) {
+  //if (digitalRead(push_pin)) {
 
     if(burn_mode<3) //Don't start if shutting down
     {

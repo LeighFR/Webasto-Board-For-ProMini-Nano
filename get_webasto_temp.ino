@@ -4,19 +4,27 @@ THERMISTOR thermistor(exhaust_temp_pin,        // Analog pin
                       100000,          // Nominal resistance at 25 ºC
                       //4050,           // thermistor's beta coefficient
                       3950,           // thermistor's beta coefficient
-                      4700);         // Value of the series resistor
+                      100000);         // Value of the series resistor
 THERMISTOR thermistor2(water_temp_pin,        // Analog pin
-                      10000,          // Nominal resistance at 25 ºC
+                      100000,          // Nominal resistance at 25 ºC
                       3977,           // thermistor's beta coefficient
-                      2200);         // Value of the series resistor
+                      100000);         // Value of the series resistor
 
 float get_wabasto_temp(int temp_pin) { // read a sensor value, smoothen it a bit and convert it to C degrees
 float temp_temp = 0;
-analogReadResolution(12);
+// LFR not available on the pro mini
+//analogReadResolution(12);
   if(temp_pin == exhaust_temp_pin) {
     rawDataExhaust = thermistor.read();
     rawDataExhaust = rawDataExhaust/10;
     temp_temp = digitalSmooth(rawDataExhaust, ExhaustSmoothArray);
+
+    // if Last Exhaust temp is zero prob first reading
+    if (Last_Exh_T == 0) {
+      Last_Exh_T = rawDataExhaust;
+      temp_temp = rawDataExhaust;
+    }
+    
     if(millis() - GWTLast_Sec > 1000 ) {
       GWTLast_Sec = millis();
 
@@ -28,7 +36,7 @@ analogReadResolution(12);
       }
 
       //Limit rate of change to Max_Change_Per_Sec
-       if(abs(temp_temp-Last_Exh_T) > Max_Change_Per_Sec) {
+      if(abs(temp_temp-Last_Exh_T) > Max_Change_Per_Sec) {
         if((temp_temp-Last_Exh_T) > 0) { 
           Last_Exh_T += Max_Change_Per_Sec;
         } else {

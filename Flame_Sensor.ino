@@ -20,8 +20,14 @@ float Change = 0;
     delay(1); //Don't let it heat up too much
     SecondV = Battery_Voltage();
     analogWrite(glow_plug_pin, 0);
-    Change = Flame_Diff / (InitV - SecondV)*100;
-    Serial.print("Flame_Sensor = "); Serial.println(Change);    
+    // LFR adding an if statement to guard divide by zero here
+    if((InitV - SecondV) == 0){
+      Change = 0;
+    } else {
+      Change = Flame_Diff / (InitV - SecondV)*100;
+    }
+    Serial.print("InitV = "); Serial.print(InitV); Serial.print("SecondV = "); Serial.print(SecondV); Serial.print("Flame_Sensor = "); Serial.println(Change);
+         
   }
   if(Change>Flame_Threshold) {
     return true;

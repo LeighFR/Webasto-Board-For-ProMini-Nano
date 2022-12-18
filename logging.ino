@@ -2,6 +2,8 @@ void logging(int ignit_fail, float temp_init, int seconds){
     // print all the interesting data
 
     //New debug variables 
+    Serial.print(" | pushpin: ");
+    Serial.print(analogRead(push_pin));
     Serial.print(" | BTN: ");
     Serial.print(heater_on);
     //Serial.print(analogRead(push_pin));

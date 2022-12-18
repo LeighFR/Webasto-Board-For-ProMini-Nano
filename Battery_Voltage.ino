@@ -5,6 +5,11 @@
 float Battery_Voltage() {
 int Batt_ADC = analogRead(push_pin);
 
+//LR now 20k and 5k - proi mini has 10 bit resolution, so 1024 at 5v
+//LR 5v = 1024 => 1v = 205
+//LR Vin = Batt_ADC * (20+5) / 5 * (1 / 205)
+//LR Vin = Batt_ADC * 0.02439
+
 //This is a 12 bit value - 0 to 4095.
 //The divider values are 6.8k & 1.8k
 //  Vin = Vdiv(6.8+1.8)/1.8
@@ -13,5 +18,6 @@ int Batt_ADC = analogRead(push_pin);
 //  Simplifies to Vin = Batt_ADC * 000385
 
 // Max measurable voltage = 15.76V
-  return (Batt_ADC * 0.00385);
+// LR Max voltage 25v
+  return (Batt_ADC * 0.02439);
 }
