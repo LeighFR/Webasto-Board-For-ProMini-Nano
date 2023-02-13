@@ -2,7 +2,8 @@ void logging(int ignit_fail, float temp_init, int seconds){
     // print all the interesting data
 
     //New debug variables 
-    Serial.print(" | pushpin: ");
+    // V6 denotes code branch - has latest v2 updates but not Simon's v3 updates
+    Serial.print("V6 | pushpin: ");
     Serial.print(analogRead(push_pin));
     Serial.print(" | BTN: ");
     Serial.print(heater_on);
@@ -35,6 +36,9 @@ void logging(int ignit_fail, float temp_init, int seconds){
 //    if(burn_mode == 3)
 //      Serial.print("Shuting Down");
 
+    Serial.print(" | Burn: ");
+    Serial.print(burn);
+    Serial.print(" | BurnMode: ");
     Serial.print(burn_mode);
     Serial.print(" | W_Tmp: ");
     Serial.print(water_temp);
@@ -66,9 +70,6 @@ void logging(int ignit_fail, float temp_init, int seconds){
     Serial.print(Battery_Voltage(),1);    
     
     Serial.print(" | Time: ");
-
-
-    
     Serial.print(seconds);
     Serial.print(" |  ");
     Serial.println(message); 

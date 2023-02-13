@@ -5,8 +5,9 @@ bool Ret_Val = false;
   //Latching switch connected to heating timer.
   //When On, attempt to regulate temperature to target
   // LFR changed this from : if (analogRead(push_pin)>10000) {
+  // push pin value of 410 = 10.2v
 //  if (analogRead(push_pin)>100) {
-  if (analogRead(push_pin)>250) {
+  if (analogRead(push_pin)>410) {
   //if (digitalRead(push_pin)) {
 
     if(burn_mode<3) //Don't start if shutting down
@@ -28,16 +29,16 @@ bool Ret_Val = false;
     {
       burn = 0;  //Shut down nicely
     }
-    if(burn_mode==0 && seconds<600) {
+    if(burn_mode==0 && seconds<20) {
       fan_speed = 40;
       burn_fan();
       delay(1000);
     }  
-    if(burn_mode==0 && seconds>=600) {
+    if(burn_mode==0 && seconds>=20) {
       fan_speed = 0;
       burn_fan();
     }  
-    if(burn_mode==0) water_pump_speed = 0; //Switch off pump if heater has shut down
+    //if(burn_mode==0) water_pump_speed = 0; //Switch off pump if heater has shut down
     if(water_temp > heater_target) {
       water_pump_speed = 100;  //Keep pump running if water hot
     } else {

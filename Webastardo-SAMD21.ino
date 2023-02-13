@@ -49,10 +49,10 @@
 //Heater Config 
 //*********************************************************************************
 //**Change these values to suit your application **
-int heater_min = 60; // Increase fuel if below
-int heater_target = 70; // degrees C Decrease fuel if above, increase if below.
-int water_warning = 75;// degrees C - At this temperature, the heater idles
-int water_overheat = 85;// degrees C - This is the temperature the heater will shut down
+int heater_min = 65; // Increase fuel if below
+int heater_target = 75; // degrees C Decrease fuel if above, increase if below.
+int water_warning = 85;// degrees C - At this temperature, the heater idles
+int water_overheat = 90;// degrees C - This is the temperature the heater will shut down
 
 //Fuel Mixture
 //If you find the exhaust is smokey, increase the fan or reduce the fuel
@@ -75,7 +75,7 @@ int pump_size = 22; //22,30,60
 //**********************************************************************************
  
 //Prime
-float prime_low_temp = 0;
+float prime_low_temp = -20;
 float prime_high_temp = 20;
 
 float prime_fan_speed = 15;
@@ -85,6 +85,9 @@ float prime_high_temp_fuelrate = 2.0;
 //Inital
 float start_fan_speed = 40;
 float start_fuel = 1;
+float start_fuel_Threshold = -10; //Exhaust temperature, below which to use start_fuel_Cold
+float start_fuel_Cold = 1.2;  //Winter Setting (use below 10C)
+float start_fuel_Warm = 1.0;  //Winter Setting (use below 10C)
 
 int full_power_increment_time = 30; //seconds
 
@@ -149,7 +152,7 @@ int glow_left = 0;
 int last_glow_value = 0;
 bool burn = false;
 bool webasto_fail = false;
-int Ignit_Fail = 0;
+int Start_Failures = 0;
 int seconds;
 
 bool lean_burn;
@@ -183,6 +186,7 @@ void setup() {
 
   
   analogWrite(water_pump_pin, 100); //Run water pump on startup for a few seconds
+  delay(2000);
   //Pulse Burn fan - to test & indicate startup
   fan_speed = 70;
   burn_fan();
