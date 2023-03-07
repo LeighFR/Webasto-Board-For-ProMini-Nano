@@ -7,7 +7,7 @@ bool Ret_Val = false;
   // LFR changed this from : if (analogRead(push_pin)>10000) {
   // push pin value of 410 = 10.2v
 //  if (analogRead(push_pin)>100) {
-  if (analogRead(push_pin)>410) {
+  if (analogRead(push_pin)>250) {
   //if (digitalRead(push_pin)) {
 
     if(burn_mode<3) //Don't start if shutting down

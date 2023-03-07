@@ -85,7 +85,7 @@ float prime_high_temp_fuelrate = 2.0;
 //Inital
 float start_fan_speed = 40;
 float start_fuel = 1;
-float start_fuel_Threshold = -10; //Exhaust temperature, below which to use start_fuel_Cold
+float start_fuel_Threshold = 10; //Exhaust temperature, below which to use start_fuel_Cold
 float start_fuel_Cold = 1.2;  //Winter Setting (use below 10C)
 float start_fuel_Warm = 1.0;  //Winter Setting (use below 10C)
 
@@ -118,8 +118,8 @@ float ExhaustSmoothArray [filterSamples];   // array for holding raw sensor valu
 float Last_Exh_T = 0;
 float Last_Wat_T = 0;
 float Last_Mute_T = 0;
-int GWTLast_Sec;
-int Last_TSec;
+long GWTLast_Sec;
+long Last_TSec;
 boolean EX_Mute = false;
 float Last_Temp = 0;
 float Max_Change_Per_Sec = 2;  //Used to slow down changes in temperature to remove spikes
@@ -153,7 +153,7 @@ int last_glow_value = 0;
 bool burn = false;
 bool webasto_fail = false;
 int Start_Failures = 0;
-int seconds;
+long seconds;
 
 bool lean_burn;
 int delayed_period = 0;

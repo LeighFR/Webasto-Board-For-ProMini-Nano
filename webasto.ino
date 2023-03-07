@@ -136,7 +136,8 @@ bool Ret_Val = false;
             fan_speed = start_fan_speed; // get some more air and restart pumping fuel slowly        
         }
 
-        if (((exhaust_temp - temp_init) > 10) && (seconds >=80)) { // exhaust temp raised a bit meaning fire has started //Debug this value of 0.5c is way too low maybe change it to 5c
+        // making the time to check for lit burner longer and less temp due to hysteresis of sensor. Hopefully when using glowplug this can be removed.
+        if (((exhaust_temp - temp_init) > 5) && (seconds >=80)) { // exhaust temp raised a bit meaning fire has started //Debug this value of 0.5c is way too low maybe change it to 5c
           burn_mode = 2; // go to main burning mode and initialize variables
           seconds = 0;
           glow_time = 0;
@@ -148,7 +149,7 @@ bool Ret_Val = false;
 
         }
 
-        if ((seconds > 100) && (burn_mode == 1)) {
+        if ((seconds > 120) && (burn_mode == 1)) { // put time back to 120, takes a while for exhaust temp sensor to see a change as mine is external to exhaust
           // the fire sequence didn't work, give it an other try
           burn_mode = 3;
           seconds = 0;

@@ -3,7 +3,10 @@ void logging(int ignit_fail, float temp_init, int seconds){
 
     //New debug variables 
     // V6 denotes code branch - has latest v2 updates but not Simon's v3 updates
-    Serial.print("V6 | pushpin: ");
+    // V7 lowered deg change for light from 10 deg to 5 deg
+    // V8 change to failed to light time from 65 up to 80 sec now to 120 sec (5 deg change from 15sec to 55sec)
+    // V9 changed seconds to long as fan seems to kick in after a few hours. suspect int overflow
+    Serial.print("V9 | pushpin: ");
     Serial.print(analogRead(push_pin));
     Serial.print(" | BTN: ");
     Serial.print(heater_on);
